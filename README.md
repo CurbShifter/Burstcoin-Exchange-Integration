@@ -1,29 +1,42 @@
 # Burstcoin-Exchange-Integration
 
-Introduction
+1 Introduction
 -
 This document explains how to integrate Burstcoin into a currency exchange platform
 
 By CurbShifter [based on this NXT document](https://nxtwiki.org/wiki/Exchange_Integration) available under GNU Free Documentation License 1.3 or later
 
 
-Table of Contents
+2 Table of Contents
 -
 
-- 1. Introduction
-- 2. Table of Contents
-- 3. Prerequisites
-- 4. Accepting Deposits 
-- 4.1. Message-Based Deposits 
-- 4.2. Account-Based Deposits
-- 5. Withdrawing / Sending Money
-- 5.1 Adding a Message To a (Payment) Transaction
-- 5.2 Hot and Cold Wallets
-- 5.3 Additional information
-- 5.3.1 Account Format
-- 5.3.2 Burst and NQT Amounts
-- 5.3.3 Asset and currency QNT amounts
-- 5.3.4 Minimum Fee
+1. Introduction
+
+2. Table of Contents
+
+3. Prerequisites
+
+4. Accepting Deposits
+
+4.1. Message-Based Deposits
+
+4.2. Account-Based Deposits
+ 
+5. Withdrawing / Sending Money
+
+5.1 Adding a Message To a (Payment) Transaction
+
+5.2 Hot and Cold Wallets
+
+5.3 Additional information
+
+5.3.1 Account Format
+
+5.3.2 Burst and NQT Amounts
+
+5.3.3 Asset and currency QNT amounts
+
+5.3.4 Minimum Fee
 
 
 3 Prerequisites
@@ -160,7 +173,7 @@ This API call takes the following parameters:
 
 Example: to decrypt the message sent by testnet transaction 12700027308938063138 send the following request parameters:
 
-> http://localhost:6876/burst?requestType=decryptFrom&secretPhrase=[passphrase from account BURST-EVHD-5FLM-3NMQ-G46NR]&account=BURST-XK4R-7VJU-6EQG-7R335&  data=9fd7a70625996990a4cf83bf9b1568830f557136044fb3209dd7343eec2ed96ec312457c4840dabaa8cbd8c1e9b8554b&nonce=650ef2a8641c19b9fd90a9ef22a2d50af90aa3b0de3d7a28b5ff2ad193369e7a&decryptedMessageIsText=true
+> http://localhost:6876/burst?requestType=decryptFrom&secretPhrase=[passphrase_from_account_BURST-EVHD-5FLM-3NMQ-G46NR]&account=BURST-XK4R-7VJU-6EQG-7R335&data=9fd7a70625996990a4cf83bf9b1568830f557136044fb3209dd7343eec2ed96ec312457c4840dabaa8cbd8c1e9b8554b&nonce=650ef2a8641c19b9fd90a9ef22a2d50af90aa3b0de3d7a28b5ff2ad193369e7a&decryptedMessageIsText=true
 
 The response is:
 
@@ -174,7 +187,7 @@ After you have decrypted the message, you can now credit the customer account wi
 Note: If you wish you can show pending deposits to the user for transaction which did not yet reach the required number of confirmations.
 
 You could also check for new transactions by specifying the last block’s timestamp+1 as the timestamp parameter: 
-`http://localhost:6876/burst?requestType=getAccountTransactions&account=BURST-XK4R-7VJU-6EQG-7R335&type=0&subtype=0&timestamp=83099831`
+> http://localhost:6876/burst?requestType=getAccountTransactions&account=BURST-XK4R-7VJU-6EQG-7R335&type=0&subtype=0&timestamp=83099831
 
 To get the last block timestamp, you would look at the last processed transaction blockTimestamp, or use the getBlockchainStatus API
 
@@ -299,9 +312,9 @@ To do so, specify the below parameters in your request:
 In case you want to attach a plain text message, specify message and set messageIsText to “true”.
 
 ### encrypt ###
-If you want to attach an encrypted message that can only be read by the recipient, specify `messageToEncrypt` and set `messageToEncryptIsText` to “true”.
+If you want to attach an encrypted message that can only be read by the recipient, specify `messageToEncrypt` and set `messageToEncryptIsText` to “true”. To create the messge you may use the `encryptTo` API call.
 
-Note that these are not mutually exclusive, you can add both a plain text and encrypted message in the same transaction.
+Note that these messages are not mutually exclusive, you can add both a plain text and encrypted message in the same transaction.
 
 Allowing the user to add a message on your withdrawal page is recommended, so that you can coordinate with other services who use a message-based deposit system.
 
